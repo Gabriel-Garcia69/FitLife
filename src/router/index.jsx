@@ -24,7 +24,7 @@ export default function AppRouter() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/workouts" element={<Workouts />} />
         <Route path="/nutrition" element={<Nutrition />} />
-        <Route path="/wearables" element={<Wearables />} />
+       {/* <Route path="/wearables" element={<Wearables />} />*/}
         <Route path="/community" element={<Community />} />
       </Routes>
     </BrowserRouter>

@@ -40,7 +40,7 @@ export default function Home() {
           </div>
 
           {/* Card: Wearables */}
-          <div className="rounded-xl bg-white p-6 shadow-md">
+          {/*<div className="rounded-xl bg-white p-6 shadow-md">
             <h2 className="mb-4 text-xl font-semibold text-gray-700">Wearables</h2>
             <p className="text-gray-500">
               Visualiza tus métricas de pulsera o reloj inteligente.
@@ -52,7 +52,8 @@ export default function Home() {
               Ver Métricas
             </Link>
           </div>
-
+            */}
+            
           {/* Card: Comunidad / Alertas */}
           <div className="rounded-xl bg-white p-6 shadow-md">
             <h2 className="mb-4 text-xl font-semibold text-gray-700">Comunidad</h2>

@@ -38,7 +38,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-4">
           <Link to="/workouts" className="text-gray-700 hover:text-blue-600 font-medium">Planes de Ejercicio</Link>
           <Link to="/nutrition" className="text-gray-700 hover:text-green-600 font-medium">Nutrición</Link>
-          <Link to="/wearables" className="text-gray-700 hover:text-purple-600 font-medium">Wearables</Link>
+         {/*<Link to="/wearables" className="text-gray-700 hover:text-purple-600 font-medium">Wearables</Link>*/} 
           <Link to="/community" className="text-gray-700 hover:text-yellow-600 font-medium">Comunidad</Link>
         </div>
       </div>
