@@ -1,21 +1,33 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import { registerApi } from "../../Api/authApi"; // Asegúrate de tener esta función en tu API
 export default function Register() {
-  const [name, setName] = useState("");
+  const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
     if (password !== confirmPassword) {
-      alert("Las contraseñas no coinciden");
+      setError("Las contraseñas no coinciden");
       return;
     }
-    console.log("Register data:", { name, email, password });
-    // Aquí integrarías la llamada al Auth Service
+    setLoading(true);
+    try {
+      const data = await registerApi(fullname, email, password);
+      // Aquí puedes guardar el token o redirigir
+      // Por ejemplo: localStorage.setItem('token', data.token);
+      // window.location.href = "/";
+      alert("¡Registro exitoso!");
+    } catch (err) {
+      setError(err.message || "Error al registrarse");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -25,11 +37,12 @@ export default function Register() {
           Crear Cuenta
         </h2>
         <form className="space-y-4" onSubmit={handleSubmit}>
+          {error && <div className="text-red-600 text-center text-sm mb-2">{error}</div>}
           <input
             type="text"
             placeholder="Nombre completo"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={fullname}
+            onChange={(e) => setFullname(e.target.value)}
             className="w-full rounded-lg border px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             required
           />
@@ -59,9 +72,10 @@ export default function Register() {
           />
           <button
             type="submit"
-            className="w-full rounded-lg bg-green-600 px-4 py-2 text-white hover:bg-green-700"
+            className="w-full rounded-lg bg-green-600 px-4 py-2 text-white hover:bg-green-700 disabled:opacity-60"
+            disabled={loading}
           >
-            Registrarse
+            {loading ? "Registrando..." : "Registrarse"}
           </button>
         </form>
         <p className="mt-4 text-center text-gray-600">

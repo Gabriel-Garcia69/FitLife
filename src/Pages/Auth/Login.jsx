@@ -1,15 +1,28 @@
-import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
+import { loginApi } from "../../Api/authApi"; // Asegúrate de tener esta función en tu API
+import React from "react";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login data:", { email, password });
-    // Aquí integrarías la llamada al Auth Service
+    setError("");
+    setLoading(true);
+    try {
+      const data = await loginApi(email, password);
+      // Aquí puedes guardar el token o redirigir
+      // Por ejemplo: localStorage.setItem('token', data.token);
+      // window.location.href = "/";
+      alert("¡Inicio de sesión exitoso!");
+    } catch (err) {
+      setError(err.message || "Error al iniciar sesión");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -19,6 +32,7 @@ export default function Login() {
           Iniciar Sesión
         </h2>
         <form className="space-y-4" onSubmit={handleSubmit}>
+          {error && <div className="text-red-600 text-center text-sm mb-2">{error}</div>}
           <input
             type="email"
             placeholder="Correo electrónico"
@@ -37,9 +51,10 @@ export default function Login() {
           />
           <button
             type="submit"
-            className="w-full rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+            className="w-full rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-60"
+            disabled={loading}
           >
-            Entrar
+            {loading ? "Entrando..." : "Entrar"}
           </button>
         </form>
         <p className="mt-4 text-center text-gray-600">
